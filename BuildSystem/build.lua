@@ -4,7 +4,8 @@ function bimg_include()
     includedirs { path.join(baseFolder, "include") }
 end
 
-function bimg_project()
+function bimg_project(options)
+    options = options or {}
     local baseFolder = debug.getinfo(1,'S').source:match("^@(.+)/buildSystem/build.lua$")
 
     project "bimg"
@@ -30,4 +31,8 @@ function bimg_project()
             path.join(baseFolder, "3rdparty/astc-codec/include"),
         }
         bx_include()
+
+        if options.dependson then
+            dependson { options.dependson }
+        end
 end
